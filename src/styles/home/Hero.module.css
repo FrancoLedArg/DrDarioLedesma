@@ -1,0 +1,143 @@
+.hero {
+  height: 100vh;
+  width: 100%;
+}
+
+.subtitle {
+  font-family: 'Montserrat';
+  font-size: 2.5rem;
+  font-weight: 400;
+  letter-spacing: 0.3rem;
+  color: rgb(0, 0, 0);
+}
+
+.container {
+  margin: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.button {
+  width: 15rem;
+  position: relative;
+  padding: 1.5rem 3rem;
+  top: 0;
+  background: linear-gradient(170deg, #003cff 0%, #01168f 100%);
+  color: white;
+  font-family: 'Montserrat';
+  font-weight: bold;
+  text-align: center;
+  transition: 0.1s ease-in-out;
+  border-radius: 5px;
+  opacity: 0.9;
+  letter-spacing: 1px;
+  box-shadow: #001274 0px 7px 2px, #000 0px 8px 5px;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button:active {
+  transform: translateY(4px);
+  box-shadow: #01168f 0px 3px 2px,#000 0px 3px 5px;
+
+}
+
+.scroll {
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.wheel {
+  position: relative;
+  height: 3rem;
+  width: 2rem;
+  border: 0.2rem solid black;
+  border-radius: 1rem;
+}
+
+.wheel::before {
+  height: 0.5rem;
+  margin-top: 0;
+  margin-left: 0.7rem;
+  position: absolute;
+  content: '';
+  border: 0.1rem solid black;
+  border-radius: 1rem;
+  animation-name: move;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes move {
+  0%, 25% {
+    margin-top: 0;
+    border-color: transparent;
+  }
+  25%, 50% {
+    margin-top: 0.7rem;
+    border-color: black;
+  }
+  50%, 75% {
+    margin-top: 1.3rem;
+    border-color: black;
+  }
+  75%, 100% {
+    margin-top: 2rem;
+    border-color: transparent;
+  }
+}
+
+.arrows {
+  margin-top: 0.5rem;
+  width: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arrow, .arrow2, .arrow3 {
+  margin-top: -1.5rem;
+  animation-name: hide;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+
+.arrow {
+  animation-delay: 0;
+}
+
+.arrow2 {
+  animation-delay: 0.3s;
+}
+
+.arrow3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.arrow::before, .arrow2::before, .arrow3::before {
+  width: 1rem;
+  margin-top: -0.6rem;
+  margin-left: 0.4rem;
+  position: absolute;
+  content: '';
+  border: 0.1rem solid black;
+  transform: rotate(90deg);
+}

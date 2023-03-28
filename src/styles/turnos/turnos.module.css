@@ -1,0 +1,49 @@
+.form {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_label {
+  position: relative;
+  font-size: 1.5rem;
+}
+
+.input_number {
+  width: 20rem;
+  height: 4rem;
+  padding: 1rem;
+  outline: none;
+  border-radius: 1rem;
+  border: 1px solid black;
+}
+
+.input_number::-webkit-outer-spin-button,
+.input_number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.input_span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 1rem;
+  padding: 0 0.2rem;
+  background-color: white;
+}
+
+.input_number:focus ~ .input_span,
+.input_number:not(:placeholder-shown).input_number:not(:focus) ~
+.input_span {
+  top: -1.6rem;
+  font-size: 1rem;
+}
+
+.dni_button {
+  width: 8rem;
+  height: 4rem;
+  margin-left: 1rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+}
