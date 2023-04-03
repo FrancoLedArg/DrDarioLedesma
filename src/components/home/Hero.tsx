@@ -22,21 +22,21 @@ export default function Hero() {
         <div className={styles.wheel}></div>
         <div className={styles.arrows}>
           <Image
-            src='/images/arrow.svg'
+            src='/images/whitearrow.svg'
             alt='arrow'
             width={30}
             height={30}
             className={styles.arrow}
           />
           <Image
-            src='/images/arrow.svg'
+            src='/images/whitearrow.svg'
             alt='arrow'
             width={30}
             height={30}
             className={styles.arrow2}
           />
           <Image
-            src='/images/arrow.svg'
+            src='/images/whitearrow.svg'
             alt='arrow'
             width={30}
             height={30}

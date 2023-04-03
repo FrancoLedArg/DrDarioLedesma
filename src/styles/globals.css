@@ -7,7 +7,7 @@
 html {
   font-size: 10px;
   font-family: 'Grotesk';
-  background-color: rgb(255, 255, 255);
+  color: white;
 }
 
 body {
@@ -27,7 +27,6 @@ a {
 h1 {
   font-family: 'Cinzel';
   font-size: 10rem;
-  font-weight: lighter;
   letter-spacing: 0.5rem;
 }
 

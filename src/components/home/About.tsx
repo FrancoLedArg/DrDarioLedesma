@@ -2,7 +2,6 @@ import Image from "next/image"
 
 // Css
 import styles from '@styles/home/About.module.css'
-import star_styles from '@styles/Stars/Stars.module.css'
 
 export default function About() {
   const handleOnMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -17,10 +16,7 @@ export default function About() {
 
   return (
     <div className={`flex_container ${styles.about}`}>
-      <div className={star_styles.stars}></div>
-      <div className={star_styles.stars2}></div>
-      <div className={star_styles.stars3}></div>
-      <h1 className={styles.title}>Profesional de Prestigio</h1>
+      <h1>Profesional de Prestigio</h1>
       <h3 className={styles.subtitle}>
         DEVOTO AL BIENESTAR DE SUS PACIENTES
       </h3>

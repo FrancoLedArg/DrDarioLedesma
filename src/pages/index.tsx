@@ -1,5 +1,5 @@
 // Layout
-import Layout from '@/layout/Home'
+import Layout from '@/layout/home/Layout'
 
 // Components
 import Hero from '@/components/home/Hero'
@@ -10,12 +10,12 @@ import FAQ from '@/components/home/FAQ'
 export default function Home() {
   return (
     <>
-      <Hero />
-      <About />
-      <Locations/>
-      <FAQ />
+      <Layout>
+        <Hero />
+        <About />
+        <Locations/>
+        <FAQ />
+      </Layout>
     </>
   )
 }
-
-Home.PageLayout = Layout

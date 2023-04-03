@@ -37,3 +37,12 @@ model Turno {
   paciente       Paciente   @relation(fields: [id_paciente], references: [id])
   id_paciente    Int
 }
+
+model Lugar {
+  id             Int        @id @default(autoincrement())
+  ciudad         String     @db.VarChar(255)
+  institucion    String     @db.VarChar(255)
+  comienzo       Int
+  final          Int
+  precio         Int        
+}

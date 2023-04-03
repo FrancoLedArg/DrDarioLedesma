@@ -1,6 +1,5 @@
 // Css
 import styles from '@styles/home/FAQ.module.css'
-import star_styles from '@styles/Stars/Stars.module.css'
 
 const questions = [
   {
@@ -53,10 +52,6 @@ export default function FAQ() {
     <div className={`flex_container ${styles.faq}`}>
       <h1>Preguntas Frecuentes</h1>
       <div className={styles.container}>
-        <div className={star_styles.stars}></div>
-        <div className={star_styles.stars2}></div>
-        <div className={star_styles.stars3}></div>
-
         <div className={styles.slider}>
           {questions.map((e, index) => (
             <div
