@@ -2,6 +2,7 @@ import Joi from 'joi'
 
 const id = Joi.number().integer()
 const username = Joi.string().alphanum().min(8).max(20)
+const email = Joi.string().email()
 const password = Joi.string().alphanum().min(8).max(20)
 
 export const getUserSchema = Joi.object({
@@ -10,6 +11,7 @@ export const getUserSchema = Joi.object({
 
 export const createUserSchema = Joi.object({
   username: username.required(),
+  email: email.required(),
   password: password.required()
 })
 

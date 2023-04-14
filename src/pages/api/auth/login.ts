@@ -37,7 +37,8 @@ async function loginHandler (
       } else {
         const token = jwt.sign({
           exp: Math.floor(Date.now() / 1000) + 60 * 60 * 6,
-          user: user.id
+          user: user.id,
+          role: user.role
         }, String(process.env.JWT_SECRET))
 
         const serialized = serialize('token', token, {

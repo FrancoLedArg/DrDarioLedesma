@@ -17,6 +17,7 @@ async function createHandler(
   if (req.method === 'POST') {
     const {
       username,
+      email,
       password
     } = req.body
 
@@ -26,6 +27,7 @@ async function createHandler(
         data: {
           role: 'PACIENTE',
           username,
+          email,
           password: hashedPassword
         },
       })

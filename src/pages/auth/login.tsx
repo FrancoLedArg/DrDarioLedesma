@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 import { useRouter } from "next/router"
 import { useFormik } from "formik"
 import { motion } from "framer-motion"
@@ -22,7 +21,6 @@ const variants = {
 }
 
 export default function LoginForm() {
-  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const formik = useFormik({
@@ -41,7 +39,6 @@ export default function LoginForm() {
 
   async function onSubmit(values: Values) {
     try {
-      setLoading(true)
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -52,15 +49,13 @@ export default function LoginForm() {
       const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.message)
+        throw new Error(data.error)
       }
 
       router.push('/turnos')
 
     } catch (error) {
-      alert(error)
-    } finally {
-      setLoading(false)
+      console.error(error)
     }
   }
 
@@ -74,46 +69,8 @@ export default function LoginForm() {
         animate='visible'
         exit='exit'
       >
-        <motion.div
-          className={`flex_container ${styles.title_container}`}
-          variants={variants}
-          initial='initial'
-          animate='visible'
-          exit='exit'
-        >
-          <motion.span
-            className={styles.title}
-            variants={variants}
-            initial='initial'
-            animate='visible'
-            exit='exit'
-            transition={{ delay: 0.1 }}
-          >
-            Inicia Sesión
-          </motion.span>
+        <span className={styles.title}>Inicia Sesión</span>
 
-          <motion.span
-            className={styles.subtitle}
-            variants={variants}
-            initial='initial'
-            animate='visible'
-            exit='exit'
-            transition={{ delay: 0.2 }}
-          >
-            PEDÍ TURNOS, MODIFICALOS O CANCELALOS
-          </motion.span>
-
-          <motion.span
-            className={styles.subtitle}
-            variants={variants}
-            initial='initial'
-            animate='visible'
-            exit='exit'
-            transition={{ delay: 0.3 }}
-          >
-            FÁCIL Y RÁPIDO
-          </motion.span>
-        </motion.div>
         <label className={styles.input_label}>
           <input
             type='text'

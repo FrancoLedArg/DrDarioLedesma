@@ -30,6 +30,19 @@ CREATE TABLE `Turno` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `Lugar` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `ciudad` VARCHAR(255) NOT NULL,
+    `institucion` VARCHAR(255) NOT NULL,
+    `dia` DATETIME(3) NULL,
+    `comienzo` VARCHAR(5) NULL,
+    `final` VARCHAR(5) NULL,
+    `precio` INTEGER NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `Paciente` ADD CONSTRAINT `Paciente_id_user_fkey` FOREIGN KEY (`id_user`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 

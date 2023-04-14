@@ -1,11 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 import { useFormik } from "formik"
 import { motion } from "framer-motion"
-
-// Components
-import Loader from '@/components/loaders/loader'
 
 // Layout
 import Layout from '@/layout/auth/Layout'
@@ -24,10 +20,6 @@ const variants = {
 }
 
 export default function SignupForm() {
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState<null | string>(null)
-  const [error, setError] = useState(null)
-
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -62,8 +54,6 @@ export default function SignupForm() {
   async function onSubmit(values: Values) {
     const { username, email, password, cpassword } = values
     try {
-      setLoading(true)
-      setError(null)
       const res = await fetch('/api/users/create', {
         method: 'POST',
         headers: {
@@ -74,16 +64,11 @@ export default function SignupForm() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.message)
-        setLoading(false)
-        return
+        throw new Error(data.message)
       }
 
-      setSuccess('Registrado exitosamente, Inicie sesion!')
     } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
+      alert(error)
     }
   }
 
@@ -97,49 +82,7 @@ export default function SignupForm() {
         animate='visible'
         exit='exit'
       >
-        <motion.div
-          className={`flex_container ${styles.title_container}`}
-          variants={variants}
-          initial='initial'
-          animate='visible'
-          exit='exit'
-        >
-          <motion.span
-            className={styles.title}
-            variants={variants}
-            initial='initial'
-            animate='visible'
-            exit='exit'
-            transition={{ delay: 0.1 }}
-          >
-            Registrarse
-          </motion.span>
-        </motion.div>
-
-
-
-        <span>Datos del Usuario</span>
-
-        <label className={styles.input_label}>
-          <input
-            type={inputs.user.type}
-            placeholder=' '
-            className={`
-              ${styles.input}
-              ${formik.errors.username ? styles.error : null}
-            `}
-            {...formik.getFieldProps(inputs.user.props)}
-          />
-          <span className={styles.input_span}>Usuario</span>
-          <Image
-            src={`/images/${inputs.user.image}.svg`}
-            alt='Persona'
-            width={25}
-            height={25}
-            className={styles.image}
-          />
-          {inputs.user.errors ? <span className={styles.error_span}>{formik.errors.username}</span> : null}
-        </label>
+        <span className={styles.title}>Registrate</span>
 
         <label className={styles.input_label}>
           <input

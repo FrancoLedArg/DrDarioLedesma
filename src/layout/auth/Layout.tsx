@@ -2,7 +2,6 @@ import { motion } from "framer-motion"
 
 // Css
 import styles from '@styles/auth/auth.module.css'
-import star_styles from '@styles/Stars/Stars.module.css'
 
 // Animations
 const variants = {
@@ -18,10 +17,6 @@ export default function Login({
 }) {
   return (
     <div className={`flex_container ${styles.auth}`}>
-      <div className={star_styles.stars}></div>
-      <div className={star_styles.stars2}></div>
-      <div className={star_styles.stars3}></div>
-
       <h1 className={styles.h1}>Dr Dario Ledesma</h1>
 
       <div className={`flex_container ${styles.glass_container}`}>

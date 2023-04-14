@@ -42,7 +42,8 @@ model Lugar {
   id             Int        @id @default(autoincrement())
   ciudad         String     @db.VarChar(255)
   institucion    String     @db.VarChar(255)
-  comienzo       Int
-  final          Int
-  precio         Int        
+  dia            DateTime?
+  comienzo       String?    @db.VarChar(5)
+  final          String?    @db.VarChar(5)
+  precio         Int?
 }

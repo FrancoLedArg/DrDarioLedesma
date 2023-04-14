@@ -14,18 +14,14 @@ async function handleReadMany(
     }
 
     try {
-      const pacientes = await prisma.paciente.findMany({
-        include: {
-          turnos: true,
-        },
-      })
+      const lugares = await prisma.lugar.findMany()
 
-      return res.status(200).json(pacientes)
+      return res.status(200).json({ data: lugares })
     } catch (error) {
-      return res.status(500).json({ error: 'Error fetching pacientes' })
+      return res.status(500).json({ message: 'Error fetching' })
     }
   } else {
-    return res.status(405).json({ error: 'Method not allowed' })
+    return res.status(405).json({ message: 'Method not allowed' })
   }
 }
 

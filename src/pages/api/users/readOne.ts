@@ -25,17 +25,13 @@ async function handleReadOne(
         }
       })
 
-      delete user.id
-      delete user.username
-      delete user.password
-      delete user.role
-
       if(!user) {
         return res.status(404).json({ error: 'User not found' })
       } else {
         return res.status(200).json({ data: user })
       }
     } catch (error) {
+      console.error(error)
       return res.status(400).json({ error: 'Bad Request' })
     }
   } else {

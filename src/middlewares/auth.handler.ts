@@ -1,38 +1,45 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
-import { getSession } from 'next-auth/client'
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-
-const prisma = new PrismaClient()
 
 type HandlerFunction = (
   req: NextApiRequest,
   res: NextApiResponse
 ) => void
 
-export default async function authHandler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-  handler: HandlerFunction
+export default function authHandler(
+  handler: HandlerFunction,
+  role: string
 ) {
-  try {
-    const session = await getSession({ req })
-    if (!session) {
-      throw new Error('Unauthorized')
+  return async (
+    req: NextApiRequest,
+    res: NextApiResponse
+    ) => {
+
+    /* Check if token exists */
+    const { token } = req.cookies
+    if(!token) {
+      res.status(401).json({ message: 'Unauthorized' })
+      return
     }
 
-    const user = await prisma.user.findUnique({
-      where: {
-        id: session.userId
-      }
-    })
-
-    if (!user) {
-      throw new Error('User not found')
+    /* Check if decoded exists */
+    const decoded = jwt.decode(token, { complete: true })
+    if(!decoded) {
+      res.status(401).json({ message: 'Unauthorized' })
+      return
     }
 
+    /* Extract payload */
+    const payload = decoded.payload as { role: string }
+
+    /* Check if roles are matching */
+    const match = await bcrypt.compare(role, payload.role)
+    if(!match) {
+      res.status(401).json({ message: 'Unauthorized' })
+    }
+
+    console.log(match)
     return handler(req, res)
-  } catch (error) {
-    res.status(401).json({ message: error.message })
   }
 }
