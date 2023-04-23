@@ -18,19 +18,34 @@ async function createHandler(
     const {
       username,
       email,
-      password
+      password,
+      nombre,
+      apellido,
+      telefono
     } = req.body
 
     const hashedPassword = await bcrypt.hash(password, 10)
     try {
-      const user = await prisma.user.create({
-        data: {
-          role: 'PACIENTE',
-          username,
-          email,
-          password: hashedPassword
-        },
-      })
+      const user= await prisma.$transaction([
+        prisma.user.create({
+          data: {
+            role: 'PACIENTE',
+            username,
+            email,
+            password: hashedPassword,
+            pacientes: {
+              create: {
+                nombre,
+                apellido,
+                telefono,
+              },
+            },
+          },
+          include: {
+            pacientes: true,
+          },
+        }),
+      ])
 
       return res.status(201).json(user)
     } catch (error) {
@@ -41,4 +56,6 @@ async function createHandler(
   }
 }
 
-export default validationHandler(createHandler, createUserSchema, 'body')
+// export default validationHandler(createHandler, createUserSchema, 'body')
+
+export default createHandler

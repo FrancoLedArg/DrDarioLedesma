@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Layout from '@/layout/dashboard/Layout'
 
 // Components
-import Card from '@/components/dashboard/Card'
+import Card from '@/components/dashboard/lugares/Card'
 import Form from '@/components/dashboard/lugares/Form'
 
 // Css
@@ -29,7 +29,7 @@ export default function index ({ data }: { data: LugaresDeAtencion[] }) {
     <>
       <Layout>
         <div>
-          <div className={styles.menu}>
+          <nav className={styles.menu}>
             <span className={styles.menu_span}>
               LUGARES DE ATENCIÓN
             </span>
@@ -52,7 +52,7 @@ export default function index ({ data }: { data: LugaresDeAtencion[] }) {
                 className={styles.menu_button}
               />
             </label>
-          </div>
+          </nav>
 
           {edit ?
             <div className={styles.cards_container}>

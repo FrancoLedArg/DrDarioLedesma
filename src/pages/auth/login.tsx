@@ -8,7 +8,7 @@ import { motion } from "framer-motion"
 import Layout from '@/layout/auth/Layout'
 
 // Libs
-import { loginValidate } from "@/libs/formvalidate"
+import { loginValidate } from "@/libs/formik/auth/formvalidate"
 
 // Css
 import styles from '@styles/auth/form.module.css'

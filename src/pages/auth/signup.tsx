@@ -1,13 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useFormik } from "formik"
 import { motion } from "framer-motion"
 
-// Layout
-import Layout from '@/layout/auth/Layout'
-
 // Libs
-import { signupValidate } from "@/libs/formvalidate"
+import { signupValidate } from "@/libs/formik/auth/formvalidate"
 
 // Css
 import styles from '@styles/auth/form.module.css'
@@ -20,60 +18,131 @@ const variants = {
 }
 
 export default function SignupForm() {
+  const router = useRouter()
+
   const formik = useFormik({
     initialValues: {
       username: '',
       email:'',
       password: '',
-      cpassword: ''
+      cpassword: '',
+      nombre: '',
+      apellido:'',
+      telefono: ''
     },
     validate: signupValidate,
     onSubmit
   })
 
-  const inputs = {
-    user:
-      {
-        type: 'text',
-        props: 'username',
-        image: 'user',
-        errors: formik.errors.username
-      }
-    ,
-    paciente: [
-
-    ]
-  }
-
   interface Values {
     username: string,
+    email: string,
     password: string,
-    cpassword: string
+    cpassword: string,
+    nombre: string,
+    apellido: string,
+    telefono: string
   }
 
   async function onSubmit(values: Values) {
-    const { username, email, password, cpassword } = values
+    const {
+      username,
+      email,
+      password,
+      nombre,
+      apellido,
+      telefono
+    } = values
+
     try {
       const res = await fetch('/api/users/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({username, password})
-      });
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          nombre,
+          apellido,
+          telefono
+        })
+      })
+
       const data = await res.json()
 
       if (!res.ok) {
         throw new Error(data.message)
       }
 
+      alert('Registrado exitosamente')
+
+      router.push('/auth/login')
     } catch (error) {
       alert(error)
     }
   }
 
+  const inputs = {
+    user: [
+      {
+        name: 'username',
+        type: 'text',
+        placeholder: 'Usuario',
+        image: '/images/user.svg',
+        errors: formik.errors.username
+      },
+      {
+        name: 'email',
+        type:'text',
+        placeholder: 'Email',
+        image: '/images/arroba.svg',
+        errors: formik.errors.email
+      },
+      {
+        name: 'password',
+        type:'password',
+        placeholder: 'Contraseña',
+        image: '/images/lock.svg',
+        errors: formik.errors.password
+      },
+      {
+        name: 'cpassword',
+        type:'password',
+        placeholder: 'Confirmá tu contraseña',
+        image: '/images/lock.svg',
+        errors: formik.errors.cpassword
+      },
+
+    ],
+    paciente: [
+      {
+        name: 'nombre',
+        type: 'text',
+        placeholder: 'Nombre',
+        image: '/images/user.svg',
+        errors: formik.errors.nombre
+      },
+      {
+        name: 'apellido',
+        type: 'text',
+        placeholder: 'Apellido',
+        image: '/images/user.svg',
+        errors: formik.errors.apellido
+      },
+      {
+        name: 'telefono',
+        type: 'text',
+        placeholder: 'Teléfono',
+        image: '/images/phone.svg',
+        errors: formik.errors.telefono
+      },
+    ]
+  }
+
   return (
-    <Layout>
+    <div className={styles.auth}>
       <motion.form
         onSubmit={formik.handleSubmit}
         className={`flex_container ${styles.form}`}
@@ -84,100 +153,66 @@ export default function SignupForm() {
       >
         <span className={styles.title}>Registrate</span>
 
-        <label className={styles.input_label}>
-          <input
-            type='text'
-            placeholder=' '
-            className={`
-              ${styles.input}
-              ${formik.errors.username ? styles.error : null}
-            `}
-            {...formik.getFieldProps('username')}
-          />
-          <span className={styles.input_span}>Usuario</span>
-          <Image
-            src={'/images/user.svg'}
-            alt='Persona'
-            width={25}
-            height={25}
-            className={styles.image}
-          />
-          {formik.errors.username ? <span className={styles.error_span}>{formik.errors.username}</span> : null}
-        </label>
+        <span className={styles.subtitle}>Datos del Usuario</span>
 
-        <label className={styles.input_label}>
-          <input
-            type='text'
-            placeholder=' '
-            className={`
-              ${styles.input}
-              ${formik.errors.username ? styles.error : null}
-            `}
-            {...formik.getFieldProps('email')}
-          />
-          <span className={styles.input_span}>Email</span>
-          <Image
-            src={'/images/arroba.svg'}
-            alt='Arroba'
-            width={25}
-            height={25}
-            className={styles.image}
-          />
-          {formik.errors.username ? <span className={styles.error_span}>{formik.errors.username}</span> : null}
-        </label>
+        {inputs.user.map((e, index) => (
+          <label key={index} className={styles.input_label}>
+            <input
+              type={e.type}
+              placeholder=' '
+              className={`
+                ${styles.input}
+                ${e.errors ? styles.error : null}
+              `}
+              {...formik.getFieldProps(e.name)}
+            />
+            <span className={styles.input_span}>{e.placeholder}</span>
+            <Image
+              src={e.image}
+              alt='Icon'
+              width={25}
+              height={25}
+              className={styles.image}
+            />
+            {e.errors ? <span className={styles.error_span}>{e.errors}</span> : null}
+          </label>
+        ))}
 
-        <label className={styles.input_label}>
-          <input
-            type="password"
-            placeholder=' '
-            className={`
-              ${styles.input}
-              ${formik.errors.password ? styles.error : null}
-            `}
-            {...formik.getFieldProps('password')}
-          />
-          <span className={styles.input_span}>Contraseña</span>
-          <Image
-            src={'/images/lock.svg'}
-            alt='Candado'
-            width={25}
-            height={25}
-            className={styles.image}
-          />
-          {formik.errors.password ? <span className={styles.error_span}>{formik.errors.password}</span> : null}
-        </label>
+        <span className={styles.subtitle}>Datos del Paciente</span>
 
-        <label className={styles.input_label}>
-          <input
-            type="password"
-            placeholder=' '
-            className={`
-              ${styles.input}
-              ${formik.errors.cpassword ? styles.error : null}
-            `}
-            {...formik.getFieldProps('cpassword')}
-          />
-          <span className={styles.input_span}>Confirmá tu contraseña</span>
-          <Image
-            src={'/images/lock.svg'}
-            alt='Candado'
-            width={25}
-            height={25}
-            className={styles.image}
-          />
-          {formik.errors.cpassword ? <span className={styles.error_span}>{formik.errors.cpassword}</span> : null}
-        </label>
+        {inputs.paciente.map((e, index) => (
+          <label key={index} className={styles.input_label}>
+            <input
+              type={e.type}
+              placeholder=' '
+              className={`
+                ${styles.input}
+                ${e.errors ? styles.error : null}
+              `}
+              {...formik.getFieldProps(e.name)}
+            />
+            <span className={styles.input_span}>{e.placeholder}</span>
+            <Image
+              src={e.image}
+              alt='Icon'
+              width={25}
+              height={25}
+              className={styles.image}
+            />
+            {e.errors ? <span className={styles.error_span}>{e.errors}</span> : null}
+          </label>
+        ))}
 
-        <button type="submit" className={styles.button}>
-          Registrarse
+        <button type='submit' className={styles.button}>
+          Registrarme
         </button>
 
-        <span>YA TIENES UNA CUENTA?</span>
+        <span className={styles.subtitle}>Ya tienes una cuenta?</span>
 
         <Link href={'/auth/login'} className={styles.button}>
           Inicia Sesion
         </Link>
       </motion.form>
-    </Layout>
+    </div>
   )
 }

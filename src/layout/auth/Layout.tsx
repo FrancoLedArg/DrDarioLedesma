@@ -17,11 +17,7 @@ export default function Login({
 }) {
   return (
     <div className={`flex_container ${styles.auth}`}>
-      <h1 className={styles.h1}>Dr Dario Ledesma</h1>
-
-      <div className={`flex_container ${styles.glass_container}`}>
         {children}
-      </div>
     </div>
   )
 }
