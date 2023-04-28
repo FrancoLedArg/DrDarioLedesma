@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { motion, scrollYProgress } from 'framer-motion'
 
 // Css
 import styles from '@styles/home/About.module.css'
@@ -16,21 +17,33 @@ export default function About() {
 
   return (
     <div className={`flex_container ${styles.about}`}>
-      <h1>Profesional de Prestigio</h1>
-      <h3 className={styles.subtitle}>
-        DEVOTO AL BIENESTAR DE SUS PACIENTES
-      </h3>
+      <div className={styles.title_container}>
+        <span className={styles.title}>
+          Profesional de Prestigio
+        </span>
+
+        <span className={styles.subtitle}>
+          TRAYECTORIA, RESPONSABILIDAD, EXCELENCIA.
+          <br />
+          SIEMPRE AL CUIDADO DE SUS PACIENTES
+        </span>
+      </div>
+
       <div className={styles.cards_container}>
-        <div className={`flex_container ${styles.card}`} onMouseMove={handleOnMouseMove}>
+        <div
+          className={`flex_container ${styles.card}`}
+          onMouseMove={handleOnMouseMove}
+        >
           <Image
             src='/images/school.svg'
             alt={'imagen'}
             height={70}
             width={70}
           />
-          <h2 className={styles.card_title}>
+
+          <span className={styles.card_title}>
             Titulado en la Universidad Nacional de Tucumán
-          </h2>
+          </span>
         </div>
 
         <div className={`flex_container ${styles.card}`} onMouseMove={handleOnMouseMove}>
@@ -40,7 +53,11 @@ export default function About() {
             height={70}
             width={70}
           />
-          <h2>8 años como neurólogo en el Hospital Garrahan</h2>
+
+          <span className={styles.card_title}>
+            8 años como neurólogo en el Hospital Garrahan
+          </span>
+
           <div>
             <h3>JEFE DE RESIDENTES</h3>
             <h3>BECARIO DE NEUROFISIOLOGÍA</h3>
@@ -55,7 +72,10 @@ export default function About() {
             height={70}
             width={70}
           />
-          <h2>30 años como especialista en neurología y neurofisiología</h2>
+
+          <span className={styles.card_title}>
+            30 años como especialista en neurología y neurofisiología
+          </span>
         </div>
 
         <div className={`flex_container ${styles.card}`} onMouseMove={handleOnMouseMove}>
@@ -65,11 +85,14 @@ export default function About() {
             height={70}
             width={70}
           />
-          <h2>
+          <span className={styles.card_title}>
             Fundador de la academia de Jiu-Jitsu
             Pequeño Samurái y del área de juegos 2-4
-          </h2>
-          <h3>DONDE ASISTEN NIÑOS CON AUTISMO Y DISCAPACIDAD</h3>
+          </span>
+
+          <span>
+            DONDE ASISTEN NIÑOS CON AUTISMO Y DISCAPACIDAD
+          </span>
         </div>
       </div>
     </div>

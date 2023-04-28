@@ -7,9 +7,20 @@ import styles from '@styles/home/Hero.module.css'
 export default function Hero() {
   return (
     <div className={`flex_container ${styles.hero}`}>
-      <h1>Dr Dario Ledesma</h1>
-      <h3 className={styles.subtitle}>NEURÓLOGO INFANTOJUVENIL</h3>
-      <div className={styles.container}>
+      <div className={styles.title_container}>
+        <span className={styles.title}>
+          Dr Dario
+          <br />
+          Ledesma
+        </span>
+
+        <span className={styles.subtitle}>
+          NEURÓLOGO INFANTOJUVENIL
+        </span>
+
+      </div>
+
+      <div className={styles.buttons_container}>
         <Link href={'#'} className={styles.button} draggable='false'>
           TURNOS
         </Link>
@@ -17,26 +28,26 @@ export default function Hero() {
           PREGUNTAS
         </Link>
       </div>
+
       <div className={`flex_container ${styles.scroll}`}>
-        <h3 className={styles.scrolltitle}>HACIA ABAJO PARA MÁS INFORMACIÓN</h3>
-        <div className={styles.wheel}></div>
+        <span className={styles.scroll_span}>SCROLL PARA MÁS INFORMACIÓN</span>
         <div className={styles.arrows}>
           <Image
-            src='/images/whitearrow.svg'
+            src='/images/arrow.svg'
             alt='arrow'
             width={30}
             height={30}
             className={styles.arrow}
           />
           <Image
-            src='/images/whitearrow.svg'
+            src='/images/arrow.svg'
             alt='arrow'
             width={30}
             height={30}
             className={styles.arrow2}
           />
           <Image
-            src='/images/whitearrow.svg'
+            src='/images/arrow.svg'
             alt='arrow'
             width={30}
             height={30}

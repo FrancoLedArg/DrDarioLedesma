@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { GetServerSidePropsContext } from 'next'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useFormik } from 'formik'
 
 import Layout from '@/layout/dashboard/Layout'
 
@@ -8,10 +9,20 @@ import Layout from '@/layout/dashboard/Layout'
 import styles from '@styles/dashboard/pacientes.module.css'
 
 export default function index({ data }: { data: any }) {
-  console.log(data)
+  const router = useRouter()
 
-  const [nombre, setNombre] = useState('')
-  const [apellido, setApellido] = useState('')
+  const formik = useFormik({
+    initialValues: {
+      nombre: '',
+      apellido: ''
+    },
+    // validate: loginValidate,
+    onSubmit
+  })
+
+  async function onSubmit () {
+
+  }
 
   return (
     <>
@@ -21,14 +32,12 @@ export default function index({ data }: { data: any }) {
             PACIENTES
           </span>
 
-          <div>
+          <form onSubmit={formik.handleSubmit}>
             <label>
               <span>Nombre</span>
               <input
                 type="text"
-                onChange={(e) => {
-                  setNombre(e.target.value)
-                }}
+                {...formik.getFieldProps('nombre')}
               />
             </label>
 
@@ -36,27 +45,11 @@ export default function index({ data }: { data: any }) {
               <span>Apellido</span>
               <input
                 type="text"
-                onChange={(e) => {
-                  setApellido(e.target.value)
-                }}
+                {...formik.getFieldProps('apellido ru')}
               />
             </label>
-            <Link href={`/dashboard/pacientes?nombre=${nombre}&apellido=${apellido}`}>Buscar</Link>
-          </div>
-
-          <div>
-            <span>N° de Paciente</span>
-            <Link href={'/dashboard/pacientes?pacientes=first'}>Flecha arriba</Link>
-            <Link href={'/dashboard/pacientes?pacientes=last'}>Flecha abajo</Link>
-          </div>
-
-          <div>
-            <span>Ultimo Turno</span>
-            <Link href={'/dashboard/pacientes?turnos=first'}>Flecha arriba</Link>
-            <Link href={'/dashboard/pacientes?turnos=last'}>Flecha abajo</Link>
-          </div>
-
-          <Link href={'/dashboard/pacientes?pacientes=blacklist'}>Lista negra</Link>
+            <button type='submit'>Buscar</button>
+          </form>
         </nav>
 
         <div className={styles.cards_container}>
@@ -68,7 +61,7 @@ export default function index({ data }: { data: any }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { req } = context
+  const { req, query } = context
   const { headers } = req
   const cookie = headers.cookie
 
@@ -81,6 +74,39 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       }
     }
   }
+
+  const { nombre, apellido } = query
+
+  if(nombre || apellido) {
+    const url = new URL('http://localhost:3000/api/pacientes/readByName')
+
+    if(nombre) {
+      url.searchParams.set('nombre', String(nombre))
+    }
+
+    if(apellido){
+      url.searchParams.set('apellido', String(apellido))
+    }
+
+    try {
+      const res = await fetch(url, {
+        headers: {
+          cookie: `${cookie}`
+        }
+      })
+      const data = await res.json()
+
+      if(!res.ok) {
+        throw new Error(data.error)
+      }
+
+      return { props: { data } }
+
+    } catch (error) {
+      alert(error)
+    }
+  }
+
 
   try {
     const res = await fetch('http://localhost:3000/api/pacientes/readMany', {
